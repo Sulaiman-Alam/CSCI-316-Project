@@ -2,6 +2,19 @@ import java.util.*;
 import java.io.*;
 
 public class project {
+    static Set<String> operators = new HashSet<>(Arrays.asList(
+            ":=", "+", "-", "*", "/", "=", "%"));
+
+    static Set<String> parentheses = new HashSet<>(Arrays.asList("(", ")", "(*", "*)"));
+
+    static Set<String> symbols = new HashSet<>(Arrays.asList("*", ";", ".", "'", ""));
+
+    static Set<String> keywords = new HashSet<>(Arrays.asList("VAR", "CONST"));
+
+    public static void checkSyntax(String line) { // Function to check syntax
+
+    }
+
     public static void main(String args[]) {
         try {
             File myObj = new File("Code.txt");
@@ -9,8 +22,8 @@ public class project {
 
             while (myReader.hasNextLine()) {
                 String line = myReader.nextLine();
-                // Will add a check to make sure job is correct if time permits
                 System.out.println(line);
+                checkSyntax(line);
             }
             myReader.close();
         } catch (FileNotFoundException e) {
