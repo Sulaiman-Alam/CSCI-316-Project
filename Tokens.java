@@ -9,7 +9,7 @@ public class Tokens {
             Arrays.asList("program", "const", "begin", "end", "if", "then", "else", "while", "do", "for", "case"));
 
     public Set<String> operators = new HashSet<>(
-            Arrays.asList("+", "-", "/", "%", "*", ":="));
+            Arrays.asList("+", "-", "/", "%", "*", ":=", "="));
 
     public Set<String> parentheses = new HashSet<>(
             Arrays.asList("(", ")", "(*", "*)"));
@@ -32,24 +32,24 @@ public class Tokens {
 
     public void checkTokens(List<String> tokens) {
         for (String token : tokens) {
-            if (keywords.contains(token)) {
-                System.out.println(token + " → is a KEYWORD");
+            if (keywords.contains(token.toLowerCase())) {
+                System.out.println(token + " -> is a KEYWORD");
             } else if (operators.contains(token)) {
-                System.out.println(token + " → is an OPERATOR");
+                System.out.println(token + " -> is an OPERATOR");
             } else if (parentheses.contains(token)) {
-                System.out.println(token + " → is a PARENTHESES");
+                System.out.println(token + " -> is a PARENTHESES");
             } else if (delimeter.contains(token)) {
-                System.out.println(token + " → is a DELIMETER");
+                System.out.println(token + " -> is a DELIMETER");
             } else if (bool.contains(token)) {
-                System.out.println(token + " → is a BOOLEAN OPERATOR");
+                System.out.println(token + " -> is a BOOLEAN OPERATOR");
             } else if (text.contains(token)) {
-                System.out.println(token + " → is a TEXT DELIMITER");
+                System.out.println(token + " -> is a TEXT DELIMITER");
             } else if (isIdentifier(token)) {
-                System.out.println(token + " → is an IDENTIFIER");
+                System.out.println(token + " -> is an IDENTIFIER");
             } else if (isNumber(token)) {
-                System.out.println(token + " → is a NUMBER");
+                System.out.println(token + " -> is a NUMBER");
             } else {
-                System.out.println(token + " → is UNKNOWN 😔");
+                System.out.println(token + " -> is UNKNOWN :(");
             }
         }
     }

@@ -10,7 +10,8 @@ public class LexicalAnalyzer {
 
             while (myReader.hasNextLine()) {
                 String line = myReader.nextLine();
-                System.out.println(line);
+                tokenize(line);
+                System.out.println();
             }
             myReader.close();
         } catch (FileNotFoundException e) {
@@ -20,13 +21,16 @@ public class LexicalAnalyzer {
     }
 
     public static void tokenize(String line) {
-        System.out.println("Tokenizing the line: " + line + "...");
+        System.out.println("Tokenizing the line: " + line + " ...");
         List<String> tokens = new ArrayList<>();
         StringBuilder str = new StringBuilder();
 
         int i = 0;
         while (i < line.length()) {
-            if (Character.isWhitespace(line.charAt(i))) {
+            char current = line.charAt(i);
+
+            // Skip whitespace
+            if (Character.isWhitespace(current)) {
                 if (str.length() > 0) {
                     tokens.add(str.toString());
                     str.setLength(0);
@@ -35,9 +39,49 @@ public class LexicalAnalyzer {
                 continue;
             }
 
+            // Handle two-character tokens
+            if (i < line.length() - 1) {
+                String twoChar = "" + current + line.charAt(i + 1);
+                if (twoChar.equals(":=") || twoChar.equals("(*") || twoChar.equals("*)")) {
+                    if (str.length() > 0) {
+                        tokens.add(str.toString());
+                        str.setLength(0);
+                    }
+                    tokens.add(twoChar);
+                    i += 2;
+                    continue;
+                }
+            }
+
+            // Handle single-character symbols
+            if (isSymbol(current)) {
+                if (str.length() > 0) {
+                    tokens.add(str.toString());
+                    str.setLength(0);
+                }
+                tokens.add(Character.toString(current));
+                i++;
+                continue;
+            }
+
+            // Add valid identifier characters
+            str.append(current);
+            i++;
+        }
+
+        if (str.length() > 0) {
+            tokens.add(str.toString());
         }
 
         Tokens newTokenizer = new Tokens();
         newTokenizer.checkTokens(tokens);
+    }
+
+    public static boolean isChar(char ch) {
+        return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z');
+    }
+
+    public static boolean isSymbol(char ch) {
+        return ":;.,()=+-*/<>".indexOf(ch) != -1;
     }
 }
