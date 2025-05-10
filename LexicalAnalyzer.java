@@ -75,10 +75,10 @@ public class LexicalAnalyzer {
 
         Tokens newTokenizer = new Tokens();
         newTokenizer.checkTokens(tokens);
-    }
 
-    public static boolean isChar(char ch) {
-        return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z');
+        System.out.println("Parsing...");
+        RecursiveDescentParser parser = new RecursiveDescentParser(tokens, newTokenizer);
+        parser.parse();
     }
 
     public static boolean isSymbol(char ch) {
